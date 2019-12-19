@@ -9,5 +9,5 @@ public interface ICharacter {
 	public static final double SPEED  = 2;
 	public ArrayList<Sprite> BuildMiner();
 	public ArrayList<Sprite> BuildLifes(int count);
-	public Sprite BuildEnemy();
+	public ArrayList<Sprite> BuildEnemy(int count);
 }

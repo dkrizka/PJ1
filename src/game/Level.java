@@ -1,10 +1,53 @@
 package game;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Level implements ILevel{
 	public ArrayList<Sprite> BuildMainBlocks() 
 	{
+		//if i read out of file
+		/*
+		 
+		*/
+		int f=0,ll=0;
+		int level_layout[] = new int [33];
+		int floor1[] = new int[6];
+		//int floor2[] = new int[3];
+		BufferedReader br = null;
+	    try {
+	        String sCurrentLine;
+	        br = new BufferedReader(new FileReader("D:/School/Level1.txt"));
+	        while ((sCurrentLine = br.readLine()) != null) {
+	        	    System.out.println( sCurrentLine + br.readLine());
+	               String[] strArr = sCurrentLine.split("\\;");
+	               for(String str:strArr){
+	                    System.out.println(str);
+	                    if(str!=null) {
+	                    level_layout[ll]=Integer.parseInt(str);
+	                    System.out.println("index = " + ll+ " number = " + level_layout[ll]);
+	                    ll++;   
+	                    }
+	                    }
+	            }
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                if (br != null)br.close();
+	            } catch (IOException ex) {
+	                ex.printStackTrace();
+	            }
+	        }
+	    for(int lll=0;lll<33;lll++) {
+	    if(f<6) {
+            floor1[f]=level_layout[lll];
+            f++;
+            }
+	    }
 		ArrayList<Sprite> tile = new ArrayList<Sprite>();
 		/*top block*/
 		for(int i = 0; i < HEIGHT/20 ;i++) {
@@ -29,20 +72,20 @@ public class Level implements ILevel{
 		
 		
 		//first floor
-		for(int i = 1; i < 10 ;i++) {
+		for(int i = floor1[0]; i < floor1[1] ;i++) {
 			Sprite block = new Sprite();
 			block.setImage("map.png");
 			double width =  block.getWidth();
 			double height = block.getHeight();
-			block.setPosition(i * width, HEIGHT -( 6* height));
+			block.setPosition(i * width, HEIGHT -( floor1[2]* height));
 			tile.add(block);
 			}
-		for(int i = 13; i < 24 ;i++) {
+		for(int i = floor1[3]; i < floor1[4] ;i++) {
 			Sprite block = new Sprite();
 			block.setImage("map.png");
 			double width =  block.getWidth();
 			double height = block.getHeight();
-			block.setPosition(i * width, HEIGHT -( 6* height));
+			block.setPosition(i * width, HEIGHT -( floor1[5]* height));
 			tile.add(block);
 			}
 		//second floor

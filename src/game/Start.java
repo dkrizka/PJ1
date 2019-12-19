@@ -79,6 +79,7 @@ public class Start extends Application {
                     input.remove( code );
                 }
             });
+        //dodelat nacteni ze souboru
         Level level = new Level();
         final ArrayList<Sprite> tile = level.BuildMainBlocks(); 
         final ArrayList<Sprite> tilesite = level.BuildSideBlocks();
@@ -98,8 +99,9 @@ public class Start extends Application {
 		Sprite minerL = miner_array.get(2);
 		Sprite minerU = miner_array.get(3);
 		//load normal miner
-		miner.render(gc);		
-		Sprite enemy = characters.BuildEnemy();
+		miner.render(gc);
+		final ArrayList<Sprite> enemies = characters.BuildEnemy(3);
+		
 		//add 3 life
 		ArrayList<Sprite> life = characters.BuildLifes(3);
 		
@@ -110,7 +112,10 @@ public class Start extends Application {
         		double t = (currentNanoTime - startNanoTime) / 1000000000.0;
         		double x = miner.getX();
         		double y = miner.getY();
-        		double ex = enemy.getX() + Math.cos(t/3);
+        		double ex1 = enemies.get(0).getX() + Math.cos(t/3);
+        		double ex2 = enemies.get(1).getX() + Math.cos(t/3);
+        		double ex3 = enemies.get(2).getX() + Math.cos(t/3);
+        		
 
         		 	boolean top=false;
 					boolean bot=false;
@@ -123,8 +128,11 @@ public class Start extends Application {
 					boolean minerRight = false;
 					boolean minerUp = false;
 					boolean dead = false;
+					for(int i=0; i< enemies.size();i++) 
+					{
+						enemies.get(i).setPosition(ex1,380 - (i * 100));
+						}
 					
-					enemy.setPosition(ex, 280);
 					
 					
 					//checkCollision(ladders)					
@@ -284,7 +292,7 @@ public class Start extends Application {
                 	minerUp = false;
                 }
                 
-                if(miner.intersects(enemy)) {
+                if(miner.intersects(enemies.get(0)) || miner.intersects(enemies.get(1)) || miner.intersects((enemies.get(2) ))) {
 					dead = true;
 				}
 				
@@ -335,8 +343,9 @@ public class Start extends Application {
         		for (Sprite sprite : tilesite) {
         			sprite.render(gc);
         		}
-
-        		enemy.render(gc);
+        		
+        		for(int i=0; i< enemies.size();i++) {enemies.get(i).render(gc);}
+        		
            		if(minerUp) {
             		minerU.render(gc);
             		}

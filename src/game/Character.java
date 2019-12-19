@@ -42,11 +42,17 @@ public class Character implements ICharacter {
 	}
 
 	@Override
-	public Sprite BuildEnemy() {
+	public ArrayList<Sprite> BuildEnemy(int count) {
+		ArrayList<Sprite> enemies = new ArrayList<Sprite>();
+		for(int i  = 0 ; i < count; i++) {
 		Sprite enemy = new Sprite();
 		enemy.setImage("enemy.png");
-		enemy.setPosition(240, 280);
-		return enemy;
+		enemy.setPosition(240, 380 - (i * 120));
+		enemies.add(enemy);
+		}
+		
+		
+		return enemies;
 	}
 	
 
